@@ -1,13 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Ball.h"
-#include "Bullet.h"
+#include "Ball.h";
+#include "Bullet.h";
 
 
-
-using namespace sf;
-
-void level1()
+void level2()
 {
 
     RenderWindow window(VideoMode(1608, 900), L"Labirinth", Style::Default);
@@ -15,9 +12,9 @@ void level1()
     window.setVerticalSyncEnabled(true);
 
     Texture Texture_level_1;
-    Texture_level_1.loadFromFile("image/levels_image/level_1/lv1_walls.png");
+    Texture_level_1.loadFromFile("image/levels_image/level_3/lv3_dark.png");
     Image level_mask;
-    level_mask.loadFromFile("image/levels_image/level_1/lv1_walls.png");
+    level_mask.loadFromFile("image/levels_image/level_3/lv3_dark.png");
     RectangleShape Wall1(Vector2f(1608, 900));
     Wall1.setTexture(&Texture_level_1);
     Wall1.setPosition(0, 0);
@@ -29,9 +26,9 @@ void level1()
     Floor.setPosition(0, 0);
 
     Texture Trap_t;
-    Trap_t.loadFromFile("image/levels_image/level_1/lv1_lovyshki_1.png");
+    Trap_t.loadFromFile("image/levels_image/level_3/lv3_lovyshki_dark.png");
     Image trap_mask;
-    trap_mask.loadFromFile("image/levels_image/level_1/lv1_lovyshki_1.png");
+    trap_mask.loadFromFile("image/levels_image/level_3/lv3_lovyshki_dark.png");
     RectangleShape Traps1(Vector2f(1608, 900));
     Traps1.setTexture(&Trap_t);
     Traps1.setPosition(0, 0);
@@ -40,16 +37,18 @@ void level1()
     Finish_t.loadFromFile("image/levels_image/final_hole.png");
     RectangleShape Finish(Vector2f(100, 100));
     Finish.setTexture(&Finish_t);
-    Finish.setPosition(1400, 700);
+    Finish.setPosition(1150, 505);
 
 
 
 
-    Ball ball1(120, 120, 20);
+    Ball ball1(1450, 105, 25);
     float dt = 0.05;
     float b = 1;
     bool win = 0;
+    float time = 0;
 
+    std::vector<Bullets> v_bullets;
     bool a = 0;
     while (win == 0)
     {
@@ -101,16 +100,31 @@ void level1()
                 break;
             }
         }
+        time += 1;
+        if (time == 10) {
+            v_bullets.push_back(Bullets(103,180,0,100));
+            v_bullets.push_back(Bullets(1455, 680, 0, -100));
+            time = 0;
+        }
+
 
         ball1.ball_move(dt);
-        win = ball1.collusion(level_mask, trap_mask, 120, 120, 1400, 700);
+        win = ball1.collusion(level_mask, trap_mask, 1450, 105, 1150, 505);
+        for (Bullets bullet : v_bullets) {
+            bullet.move(dt);
+
+
+        }
+
 
 
         window.clear(Color::Blue);
         window.draw(Floor);
         window.draw(Wall1);
         window.draw(Traps1);
-
+        for (Bullets bullet : v_bullets) {
+            bullet.draw(window);
+        }
         window.draw(Finish);
         ball1.draw(window);
         window.display();

@@ -6,20 +6,20 @@ using namespace sf;
 
 class Ball {
 private:
-    float x, y, vx, vy;
     int R;
     bool hit, move;
     CircleShape circle;
 
 
 public:
-    float ax, ay;
+    float x, y, vx, vy, ax, ay;
 
     Ball(int x, int y, int R) {
         /*
         Set start values
         :param x: x coordinate of start ball position
         :param y: y coordinate of start ball position
+        :param R: ball radius
         */
         this->x = x;
         this->y = y;
@@ -120,10 +120,10 @@ public:
         int overlap_walls_x_L = Wall.getPixel(x - R - abs(vx) + 20, y).a;
         int overlap_walls_y_T = Wall.getPixel(x, y - R - abs(vy) + 25).a;
         int overlap_walls_y_D = Wall.getPixel(x, y + R + abs(vy) + 25).a;
-        int overlap_traps_x_R = traps.getPixel(x + R + abs(vx), y).a;
-        int overlap_traps_x_L = traps.getPixel(x - R - abs(vx), y).a;
-        int overlap_traps_y_T = traps.getPixel(x, y - R - abs(vy)).a;
-        int overlap_traps_y_D = traps.getPixel(x, y + R + abs(vy)).a;
+        int overlap_traps_x_R = traps.getPixel(x + R, y).a;
+        int overlap_traps_x_L = traps.getPixel(x - R, y).a;
+        int overlap_traps_y_T = traps.getPixel(x, y - R).a;
+        int overlap_traps_y_D = traps.getPixel(x, y + R).a;
 
 
 
