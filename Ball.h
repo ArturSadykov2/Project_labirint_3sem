@@ -37,34 +37,26 @@ public:
 
 
     }
+
+    void restart(int St_x, int St_y) {
+        /*
+        Restart the game
+        :param St_x: start ball x position
+        :param St_y: start ball y position
+        */
+        x = St_x;
+        y = St_y;
+        vx = 0;
+        vy = 0;
+        ax = 0;
+        ay = 0;
+    }
+
     void draw(RenderWindow& window) {
         window.draw(circle);
     }
 
-    void ball_boost(Event event) {
-        /*
-        Check buttons positions and return ball boost
-        */
-        float a = 0.33;
-        if (event.key.code == Keyboard::S) {
-            ay = a;
-        }
-        else if (event.key.code == Keyboard::W) {
-            ay = -a;
-        }
-        else {
-            ay = 0;
-        }
-        if (event.key.code == Keyboard::A) {
-            ax = -a;
-        }
-        else if (event.key.code == Keyboard::D) {
-            ax = a;
-        }
-        else {
-            ax = 0;
-        }
-    }
+    
 
 
     void ball_move(float dt) {
@@ -107,11 +99,11 @@ public:
     bool collusion(Image Wall, Image traps, int St_x, int St_y, int F_x, int F_y) {
         /*
         Check collision ball with walls and traps
-        :param level_mask: mask with level walls
-        :param ball_mask: mask with ball
-        :param trap_mask: mask with level traps
-        :param x: start ball x position
-        :param y: start ball y position
+        :param Wall: texture of wall
+        :param traps: texture of traps
+        :param St_x: start ball x position
+        :param St_y: start ball y position
+        :param F_x, F_y: coordinates of finish
         */
 
 

@@ -5,5 +5,6 @@ using namespace sf;
 
 int main()
 {
+	level1();
 	level2();
 }

@@ -3,6 +3,7 @@
 #include "Ball.h";
 #include "Bullet.h";
 
+using namespace std;
 
 void level2()
 {
@@ -46,9 +47,10 @@ void level2()
     float dt = 0.05;
     float b = 1;
     bool win = 0;
-    float time = 0;
+    int time = 300;
+    bool kill = 0;
 
-    std::vector<Bullets> v_bullets;
+    vector<Bullets> v_bullets;
     bool a = 0;
     while (win == 0)
     {
@@ -101,21 +103,23 @@ void level2()
             }
         }
         time += 1;
-        if (time == 10) {
-            v_bullets.push_back(Bullets(103,180,0,100));
-            v_bullets.push_back(Bullets(1455, 680, 0, -100));
+        if (time >= 200) {
+            v_bullets.push_back(Bullets(103,190,0,40));
+            v_bullets.push_back(Bullets(1455, 680, -0, -40));
             time = 0;
         }
 
 
         ball1.ball_move(dt);
         win = ball1.collusion(level_mask, trap_mask, 1450, 105, 1150, 505);
-        for (Bullets bullet : v_bullets) {
-            bullet.move(dt);
-
-
+        for (int i = 0; i < v_bullets.size(); i++) {
+            v_bullets[i].move(dt);
+            kill = v_bullets[i].collusion(level_mask, ball1, 1450, 105, dt);
+            if (kill == 1) {
+                v_bullets.erase(v_bullets.begin() + i);
+                kill = 0;
+            }
         }
-
 
 
         window.clear(Color::Blue);
