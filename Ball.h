@@ -37,6 +37,16 @@ public:
 
 
     }
+
+    void restart(int St_x, int St_y) {
+        x = St_x;
+        y = St_y;
+        vx = 0;
+        vy = 0;
+        ax = 0;
+        ay = 0;
+    }
+
     void draw(RenderWindow& window) {
         window.draw(circle);
     }

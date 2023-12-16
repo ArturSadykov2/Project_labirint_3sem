@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <random>
+#include <cassert>
 #include "Ball.h"
 
 using namespace sf;
@@ -18,11 +19,10 @@ public:
         circle.setFillColor(Color::Black);
         circle.setPosition(x, y);
     }
-    //~Bullets();
+    
 
 
     void draw(RenderWindow& window) {
-        circle.setPosition(x, y);
         window.draw(circle);
     }
 
@@ -32,26 +32,19 @@ public:
         circle.setPosition(x, y);
 
     }
-    /*
-    std::pair<bool, bool> collusion(const Image& wall, const Ball& ball, float x, float y, float dt) {
-        bool overlap_wall = wall.getPixel(x + vx * dt - 0, y + vy * dt - 0) != Color::Transparent;
-        //bool overlap_ball = ball..getPixel(x + vx * dt - ball.x - ball.vx, y + vy * dt - ball.y - ball.vy) != Color::Transparent;
+    
+    bool collusion(const Image& wall, Ball& ball, int St_x, int St_y, float dt) {
+        int overlap_wall = wall.getPixel(x + vx * dt, y + vy * dt).a;
+        bool overlap_ball = ((ball.x-x)* (ball.x - x)+ (ball.y - y) * (ball.y - y)<50*50);
         bool kill_ball = false;
         bool kill = false;
         if (overlap_ball) {
-            ball.x = x;
-            ball.y = y;
-            ball.vx = 0;
-            ball.vy = 0;
-            ball.ax = 0;
-            ball.ay = 0;
-            kill_ball = true;
+            ball.restart(St_x, St_y);
         }
-        if (overlap_wall) {
-            kill = true;
+        if (overlap_wall>=200) {
+            return kill=1;
         }
-        return std::make_pair(kill, kill_ball);
-    }*/
+    }
 
 private:
     int points;
